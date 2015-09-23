@@ -1,0 +1,57 @@
+// If you would like more information on the gradle-appengine-plugin please refer to the github page
+// https://github.com/GoogleCloudPlatform/gradle-appengine-plugin
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.google.appengine:gradle-appengine-plugin:1.9.18'
+    }
+}
+
+repositories {
+    jcenter();
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'appengine'
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+dependencies {
+    //compile fileTree(include: ['*.jar'], dir: 'libs')
+    //testCompile fileTree(include: ['*.jar'], dir: 'testLibs')
+    compile files('testLibs/junit-4.12.jar')
+    compile files('testLibs/hamcrest-library-1.3.jar')
+    compile files('testLibs/appengine-api-stubs-1.9.18.jar')
+    compile files('testLibs/appengine-api-labs-1.9.18.jar')
+    compile files('testLibs/appengine-testing-1.9.18.jar')
+    compile files('testLibs/appengine-tools-sdk-1.9.18.jar')
+    compile files('libs/appengine-endpoints-1.9.18.jar')
+    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.18'
+    compile 'com.google.appengine:appengine-endpoints:1.9.18'
+    compile 'com.google.appengine:appengine-endpoints-deps:1.9.18'
+    compile 'javax.servlet:servlet-api:2.5'
+    compile 'com.googlecode.objectify:objectify:5.0.3'
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.google.appengine:appengine-testing:1.9.18'
+    testCompile 'com.google.appengine:appengine-api-labs:1.9.18'
+    testCompile 'com.google.appengine:appengine-api-stubs:1.9.18'
+    testCompile 'com.google.appengine:appengine-tools-sdk:1.9.18'
+    testCompile 'org.hamcrest:hamcrest-core:1.3'
+    compile files('testLibs/hamcrest-core-1.3.jar')
+}
+
+appengine {
+    downloadSdk = true
+    appcfg {
+        oauth2 = true
+    }
+    endpoints {
+        getClientLibsOnBuild = true
+        getDiscoveryDocsOnBuild = true
+    }
+}
